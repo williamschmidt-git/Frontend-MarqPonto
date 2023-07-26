@@ -10,3 +10,14 @@
 - Realize o comando: ```git clone https://github.com/williamschmidt-git/Frontend-MarqPonto```
 - Crie um arquivo ```.env``` com a URL da requisição enviada: ```REACT_APP_API=https://marqponto-api-dev.azurewebsites.net/api/v1//info/testAndre```
 - Na pasta raiz do projeto rode o comando: ```npm start```. Este comando instalará e iniciará a aplicação na porta padrão (3000) caso ela não esteja ocupada.
+
+
+## App
+#### Sistema vazio
+![alt text](/public/imgs/empty.png "Emtpy inputs")
+
+#### Mensagem de erro
+![alt text](/public/imgs/error.png "Title")
+
+#### Mensagem de sucesso
+![alt text](/public/imgs/sucess.png "Title")
