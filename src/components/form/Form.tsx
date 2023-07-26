@@ -1,34 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import  { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import Loader from '../loader/Loader';
+import { FormType, Input } from './types';
+import 'react-toastify/dist/ReactToastify.css';
 import './styles.css';
 
-interface Inputs {
-  fieldType: number;
-  id: string;
-  title: string;
-}
-
-type Form = {
-  Bem_vindo: string;
-  Estado_civil: string;
-  Grau_de_Instrução: string;
-  Nome_da_mãe: string;
-  Nome_da_tia: string;
-  Nome_do_gato: string;
-  Nome_do_pai: string;
-  Número_do_RG: string;
-  Registro_profissional: string;
-  Data_de_nascimento: string;
-  Número_da_carteira_de_trabalho: string;
-  Número_da_CNH: string;
-  PIS_ou_NIS: string;
-  Telefone: string;
-  Dados_bancários: string;
-  Endereço_residencial: string;
-}
-
-const defaultForm: Form = {
+const defaultForm: FormType = {
   Bem_vindo: '',
   Estado_civil: '',
   Grau_de_Instrução: '',
@@ -48,10 +26,8 @@ const defaultForm: Form = {
 };
 
 export function Form () {
-  const [inputs, setInputs] = useState<Inputs[]>([]);
-  const [formState, setFormState] = useState<Form>(defaultForm);
-
-  const navigate = useNavigate();
+  const [inputs, setInputs] = useState<Input[]>([]);
+  const [formState, setFormState] = useState<FormType>(defaultForm);
   
   useEffect(() => {
     async function fetchData() {
@@ -69,7 +45,7 @@ export function Form () {
     fetchData();
   }, []);
 
-  function sortArray (array: Inputs[]) {
+  function sortArray (array: Input[]) {
     
     array.sort((a, b) => {
       const titleA = a.title.toUpperCase();
@@ -90,15 +66,36 @@ export function Form () {
     });
   }
 
-  function switchBlankSpaceToUnderscoreOfTitleAttribute(array: Inputs[]) {
+  function switchBlankSpaceToUnderscoreOfTitleAttribute(array: Input[]) {
     array.forEach((e) => {
       e.title = e.title.replace(/\s+/g,'_');
     });
   }
 
   function validate() {
-    
+    const checkValues = Object.values(formState).every((e) => {
+      return e === '';
+    });
+    console.log(checkValues);
+
+    if(checkValues === true) {
+      showToastFailMessage();
+    } else {
+      showToastMessage();
+    }
   }
+
+  const showToastMessage = () => {
+    toast.success('Dados enviados com sucesso!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  };
+
+  const showToastFailMessage = () => {
+    toast.error('Verifique se todos os campos estão preenchidos!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  };
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const {name, value} = event.target;
@@ -107,15 +104,14 @@ export function Form () {
     }));
   }
 
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     validate();
-
-    navigate('/logout');
   }
 
   return(
-    <form className='form'  onSubmit={(e) => handleSubmit(e)}>
+    <form className='form' onSubmit={(e) => handleSubmit(e)}>
       {
         inputs.length > 0 ? (
           <div className='wrapper'>
@@ -142,9 +138,10 @@ export function Form () {
               })
             }
           </div>
-        ) : null
+        ) : <Loader />
       }
-      <button>Enviar</button>
+      <button onClick={validate}>Enviar</button>
+      <ToastContainer />
     </form>
   );
 }
