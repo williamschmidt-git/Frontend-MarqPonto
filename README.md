@@ -5,5 +5,8 @@
 3. Após preencher os dados, ao enviar deve exibir uma mensagem de sucesso.
 4. Será avaliado nesse teste: Conhecimento em Restful, HTMl, CSS, Framework de javascript, Noção de regra de negócios.
 
-REQUEST:
-GET: https://marqponto-api-dev.azurewebsites.net/api/v1//info/testAndre
+
+## Instruções
+- Realize o comando: ```git clone https://github.com/williamschmidt-git/Frontend-MarqPonto```
+- Crie um arquivo ```.env``` com a URL da requisição enviada: ```REACT_APP_API=https://marqponto-api-dev.azurewebsites.net/api/v1//info/testAndre```
+- Na pasta raiz do projeto rode o comando: ```npm start```. Este comando instalará e iniciará a aplicação na porta padrão (3000) caso ela não esteja ocupada.
