@@ -43,7 +43,7 @@ export function Form () {
     }
 
     fetchData();
-  }, []);
+  }, [inputs]);
 
   function sortArray (array: Input[]) {
     
@@ -105,7 +105,6 @@ export function Form () {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    validate();
   }
 
   return(
