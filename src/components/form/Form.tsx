@@ -9,7 +9,7 @@ import './styles.css';
 const defaultForm: FormType = {
   Bem_vindo: '',
   Estado_civil: '',
-  Grau_de_Instrução: '',
+  Grau_de_instrução: '',
   Nome_da_mãe: '',
   Nome_da_tia: '',
   Nome_do_gato: '',
@@ -73,12 +73,11 @@ export function Form () {
   }
 
   function validate() {
-    const checkValues = Object.values(formState).every((e) => {
-      return e === '';
+    const checkIfEveryInputIsComplete = Object.values(formState).some((e) => {
+      return e.length === 0;
     });
-    console.log(checkValues);
 
-    if(checkValues === true) {
+    if(checkIfEveryInputIsComplete) {
       showToastFailMessage();
     } else {
       showToastMessage();
@@ -103,7 +102,6 @@ export function Form () {
       ...prevState, [name]: value
     }));
   }
-
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

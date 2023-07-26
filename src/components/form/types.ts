@@ -7,7 +7,7 @@ export type Input = {
 export type FormType = {
   Bem_vindo: string;
   Estado_civil: string;
-  Grau_de_Instrução: string;
+  Grau_de_instrução: string;
   Nome_da_mãe: string;
   Nome_da_tia: string;
   Nome_do_gato: string;
