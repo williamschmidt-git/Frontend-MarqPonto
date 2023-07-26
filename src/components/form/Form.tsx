@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import  { useNavigate } from 'react-router-dom';
 import './styles.css';
 
 interface Inputs {
@@ -48,9 +49,10 @@ const defaultForm: Form = {
 
 export function Form () {
   const [inputs, setInputs] = useState<Inputs[]>([]);
-  const [secondTable, setSecondTable] = useState<Inputs[]>([]);
   const [formState, setFormState] = useState<Form>(defaultForm);
 
+  const navigate = useNavigate();
+  
   useEffect(() => {
     async function fetchData() {
       const res = await fetch(`${process.env.REACT_APP_API}`);
@@ -94,6 +96,10 @@ export function Form () {
     });
   }
 
+  function validate() {
+    
+  }
+
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const {name, value} = event.target;
     setFormState(prevState => ({
@@ -101,20 +107,36 @@ export function Form () {
     }));
   }
 
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    validate();
+
+    navigate('/logout');
+  }
+
   return(
-    <form className='form'>
+    <form className='form'  onSubmit={(e) => handleSubmit(e)}>
       {
         inputs.length > 0 ? (
           <div className='wrapper'>
             {
               inputs.map((e) => {
                 return (
-                  <div key={e.id} className='input-wrapper'>
-                    <label htmlFor={e.title} className='label'>
-                      {e.title}
+                  <div 
+                    key={e.id} 
+                    className='input-wrapper'>
+                    <label
+                      htmlFor={e.title} 
+                      className='label'>
+                      {e.title.replace(/_/g, ' ')}
                     </label>
-                    <input type='text' className='input' name={e.title} 
-                      onChange={handleChange}/>
+                    <input 
+                      type='text' 
+                      className='input' 
+                      name={e.title}
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
                 );
               })
@@ -122,9 +144,7 @@ export function Form () {
           </div>
         ) : null
       }
-
       <button>Enviar</button>
-
     </form>
   );
 }
